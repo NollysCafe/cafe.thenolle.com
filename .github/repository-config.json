@@ -1,0 +1,13 @@
+{
+	"projectType": "public-website",
+	"deploymentStatus": "in-progress",
+	"hasGitHubActions": "yes",
+	"builtWithNollyCLI": "yes",
+	"mainBranch": "main",
+	"liveURL": "https://cafe.thenolle.com",
+	"requiresSecrets": "no",
+	"repoOwner": "TheNolle",
+	"repoName": "cafe.thenolle.com",
+	"repoVisibility": "public",
+	"repoDescription": "Nolly's Cafe Website"
+}
