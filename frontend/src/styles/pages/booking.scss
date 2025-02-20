@@ -1,0 +1,141 @@
+@use '../colors' as c;
+
+.page.booking {
+	display: grid;
+	grid-template-columns: 1fr 300px;
+	gap: 1rem;
+
+	@media screen and (max-width: 768px) {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr;
+	}
+
+	.calendar {
+		min-width: 50%;
+		width: 50%;
+		max-width: 600px;
+		margin: auto;
+		border-radius: 0;
+
+		@media screen and (max-width: 768px) {
+			width: 100%;
+		}
+	}
+
+	aside.times {
+		max-width: 350px;
+		max-height: 100vh;
+		display: grid;
+		grid-template-rows: auto 1fr auto auto;
+		border-left: 1px solid rgba(c.$dark-gray, 0.25);
+
+		@media screen and (max-width: 768px) {
+			max-width: 100%;
+			max-height: 53.25vh;
+			border-left: none;
+		}
+
+		header {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.75rem 1rem;
+			font-size: 1.25rem;
+			font-weight: bold;
+			color: c.$background;
+			background-color: c.$primary;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			list-style: none;
+			overflow-y: auto;
+
+			li {
+				cursor: pointer;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0.75rem 1rem;
+				transition: 250ms ease-in-out;
+
+				&.time {
+					border-bottom: 1px solid c.$pale-gray;
+
+					&:hover {
+						background-color: rgba(c.$dark-gray, 0.25);
+					}
+
+					&.selected {
+						background-color: rgba(c.$dark-gray, 0.75);
+					}
+				}
+
+				&.no-times {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.5rem;
+					font-size: 0.875rem;
+					font-style: italic;
+					color: c.$dark-red;
+
+					svg {
+						font-size: 1.2rem;
+					}
+				}
+			}
+		}
+
+		small.current-time {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.75rem 1rem;
+			font-size: 0.875rem;
+			font-style: italic;
+			color: c.$light-gray;
+			background-color: rgba(c.$secondary, 0.125);
+		}
+
+		button {
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 0.5rem;
+			padding: 0.75rem 1rem;
+			font-size: 1rem;
+			font-weight: bold;
+			color: c.$background;
+			background-color: c.$primary;
+			transition: 250ms ease-in-out;
+
+			svg {
+				color: c.$lavender;
+				transition: 250ms ease-in-out;
+			}
+
+			&:hover {
+				background-color: darken(c.$primary, 10%);
+
+				svg {
+					color: c.$background;
+				}
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+				background-color: c.$pale-gray;
+
+				svg {
+					color: c.$dark-gray;
+				}
+			}
+		}
+	}
+}

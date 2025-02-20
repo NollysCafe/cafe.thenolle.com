@@ -1,0 +1,132 @@
+@use '../colors' as c;
+
+$calendar-sizes: (
+	tiny: (width: 180px, ratio: 1),
+	small: (width: 280px, ratio: 1.1),
+	normal: (width: 350px, ratio: 1.2),
+	large: (width: 450px, ratio: 1.3),
+	big: (width: 550px, ratio: 1.4)
+);
+
+$day-sizes: (
+	tiny: 28px,
+	small: 34px,
+	normal: 42px,
+	large: 50px,
+	big: 58px
+);
+
+.calendar {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 20px;
+	border-radius: 12px;
+	background: c.$off-black;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+	transition: max-width 0.3s ease-in-out;
+
+	@each $size, $values in $calendar-sizes {
+		&.#{$size} {
+			max-width: map-get($values, width);
+			aspect-ratio: map-get($values, ratio);
+		}
+	}
+
+	&-header {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 15px;
+
+		h2 {
+			font-size: clamp(1rem, 2vw, 1.3rem);
+			font-weight: bold;
+			text-transform: capitalize;
+			color: c.$primary;
+		}
+
+		button {
+			cursor: pointer;
+			font-size: 1.5rem;
+			color: c.$primary;
+			background: none;
+			transition: 200ms ease-in-out;
+
+			&:hover {
+				color: darken(c.$primary, 10%);
+			}
+		}
+	}
+
+	.calendar-grid {
+		flex-grow: 1;
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 5px;
+
+		.calendar-day {
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			aspect-ratio: 1;
+			font-weight: bold;
+			border: 1px solid transparent;
+			color: c.$text;
+			background: transparent;
+			transition: 250ms ease-in-out;
+
+			@each $size, $day-size in $day-sizes {
+				.calendar.#{$size} & {
+					width: $day-size;
+					height: $day-size;
+				}
+			}
+
+			&:hover {
+				background: rgba(c.$primary, 0.5);
+			}
+
+			&.selected {
+				font-size: 1.2rem;
+				border-color: darken(c.$primary, 15%);
+				color: c.$dark-gray;
+				background: c.$primary;
+				box-shadow: 0 0 0 2px rgba(c.$primary, 0.125);
+			}
+
+			&.occupied {
+				cursor: not-allowed;
+				color: darken(c.$primary, 30%);
+				background: lighten(c.$primary, 20%);
+			}
+
+			&.disabled {
+				cursor: not-allowed;
+				color: c.$gray;
+				background: c.$off-black;
+			}
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.calendar {
+		max-width: 100%;
+		padding: 15px;
+
+		.calendar-header h2 {
+			font-size: 1rem;
+		}
+
+		.calendar-grid {
+			gap: 3px;
+		}
+	}
+}

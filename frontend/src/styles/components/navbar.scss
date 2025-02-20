@@ -1,0 +1,83 @@
+@use '../colors' as c;
+
+nav.navbar {
+	grid-area: navbar;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-direction: column;
+	padding: 1rem 0.5rem;
+
+	.logo {
+		padding: 0.5rem 0.75rem;
+		text-decoration: none;
+		font-weight: 700;
+		border-radius: 0.5rem;
+		color: c.$background;
+		background-color: c.$primary;
+		transition: 250ms ease-in-out;
+
+		&:hover {
+			background-color: c.$secondary;
+		}
+	}
+
+	.link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		column-gap: 0.25rem;
+		padding: 0.5rem 0.75rem;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		color: c.$text;
+		opacity: 0.75;
+		transition: 250ms ease-in-out;
+
+		&:nth-child(1) {
+			--link-color: #{rgba(c.$lavender, 0.25)};
+		}
+
+		&:nth-child(2) {
+			--link-color: #{rgba(c.$pink, 0.25)};
+		}
+
+		&:nth-child(3) {
+			--link-color: #{rgba(c.$red, 0.25)};
+		}
+
+		&:nth-child(4) {
+			--link-color: #{rgba(c.$gray, 0.25)};
+		}
+
+		&.active {
+			opacity: 1;
+		}
+	}
+
+	&.mobile {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		column-gap: 1rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 0.5rem 0.5rem 0 0;
+		background-color: rgba(c.$primary, 0.125);
+
+		.logo {
+			display: none;
+		}
+
+		.link.active {
+			background-color: var(--link-color);
+
+			span {
+				font-size: inherit;
+			}
+		}
+
+		span {
+			font-size: 0;
+		}
+	}
+}
