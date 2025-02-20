@@ -1,0 +1,38 @@
+name: Read Repository Config
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  read-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Read repository-config.json
+        id: read-config
+        run: |
+          CONFIG_FILE=".github/repository-config.json"
+          if [ -f "$CONFIG_FILE" ]; then
+            echo "Repository Config Found!"
+            cat "$CONFIG_FILE"
+
+            # Extract values and make them available as environment variables
+            echo "PROJECT_TYPE=$(jq -r '.projectType' $CONFIG_FILE)" >> $GITHUB_ENV
+            echo "DEPLOYMENT_STATUS=$(jq -r '.deploymentStatus' $CONFIG_FILE)" >> $GITHUB_ENV
+            echo "LIVE_URL=$(jq -r '.liveURL' $CONFIG_FILE)" >> $GITHUB_ENV
+          else
+            echo "repository-config.json not found!"
+            exit 1
+          fi
+
+      - name: Print Config Variables
+        run: |
+          echo "Project Type: $PROJECT_TYPE"
+          echo "Deployment Status: $DEPLOYMENT_STATUS"
+          echo "Live URL: $LIVE_URL"
