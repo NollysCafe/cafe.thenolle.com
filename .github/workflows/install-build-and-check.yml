@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-and-check:
+  install-build-and-check:
     runs-on: ubuntu-latest
 
     steps:

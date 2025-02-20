@@ -1,0 +1,40 @@
+name: Save Build Artifacts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-save:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build Project
+        run: |
+          pnpm --filter frontend build
+          pnpm --filter backend build
+
+      - name: Save Frontend Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: dist/frontend
+
+      - name: Save Backend Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-build
+          path: dist/backend

@@ -1,0 +1,29 @@
+name: TypeScript Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-typescript:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Check TypeScript (Frontend)
+        run: pnpm --filter frontend tsc --noEmit
+
+      - name: Check TypeScript (Backend)
+        run: pnpm --filter backend tsc --noEmit
