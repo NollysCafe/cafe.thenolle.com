@@ -1,4 +1,4 @@
-name: Install & Check
+name: Install, Build & Check
 
 on:
   push:
@@ -25,7 +25,15 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Check Build Commands (Optional)
+      - name: Build Project
         run: |
-          pnpm --filter frontend build
-          pnpm --filter backend build
+          pnpm run build
+
+      - name: Check "dist" Directory
+        run: |
+          if [ -d "dist" ]; then
+            echo "Directory exists"
+          else
+            echo "Directory does not exist"
+            exit 1
+          fi
